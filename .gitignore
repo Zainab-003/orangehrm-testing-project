@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -147,3 +148,8 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+=======
+node_modules/
+test-results/
+playwright-report/
+>>>>>>> e729c62 (Initial commit - 8 passing Playwright tests for OrangeHRM)
