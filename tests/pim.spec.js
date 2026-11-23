@@ -12,7 +12,7 @@ test.describe('PIM Module', () => {
   test('TC_PIM_001 - Add new employee', async ({ page }) => {
     const pimPage = new PimPage(page);
     await pimPage.navigateToAddEmployee();
-    const uniqueName = `Test${Math.floor(Math.random() * 1000)}`; // Unique name to avoid duplicate errors
+    const uniqueName = `Test${Math.floor(Math.random() * 1000)}`; 
     await pimPage.addEmployee('John', uniqueName);
     await expect(pimPage.successToast).toContainText('Successfully Saved');
   });
@@ -28,11 +28,8 @@ test.describe('PIM Module', () => {
     test('TC_PIM_003 - Search non-existent employee returns no records', async ({ page }) => {
     const pimPage = new PimPage(page);
     await pimPage.navigateToEmployeeList();
-    
     await pimPage.searchNameInput.fill('NoSuchEmployeeXYZ123');
-    
     await page.keyboard.press('Escape');
-    
     await pimPage.searchButton.click();
     await page.waitForLoadState('networkidle');
     await expect(page.getByText('No Records Found')).toBeVisible({ timeout: 10000 });
