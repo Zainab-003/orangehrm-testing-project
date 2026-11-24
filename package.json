@@ -1,10 +1,11 @@
 {
   "name": "orangehrmproject",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playwright automated tests for OrangeHRM",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "report": "playwright show-report"
   },
   "keywords": [],
   "author": "",
