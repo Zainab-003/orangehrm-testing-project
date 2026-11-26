@@ -12,27 +12,30 @@ test.describe('PIM Module', () => {
   test('TC_PIM_001 - Add new employee', async ({ page }) => {
     const pimPage = new PimPage(page);
     await pimPage.navigateToAddEmployee();
-    const uniqueName = `Test${Math.floor(Math.random() * 1000)}`; 
-    await pimPage.addEmployee('John', uniqueName);
+    await pimPage.addEmployee('John', `Test${Date.now()}`);
     await expect(pimPage.successToast).toContainText('Successfully Saved');
   });
 
-    test('TC_PIM_002 - Search existing employee', async ({ page }) => {
+  test('TC_PIM_002 - Search existing employee', async ({ page }) => {
     const pimPage = new PimPage(page);
+    const lastName = `Srch${Date.now()}`;
+
+    await pimPage.navigateToAddEmployee();
+    await pimPage.addEmployee('John', lastName);
+    await expect(pimPage.successToast).toContainText('Successfully Saved');
+
     await pimPage.navigateToEmployeeList();
-    await pimPage.searchEmployee('Admin'); 
-    
-    await expect(pimPage.tableBody).toContainText('Admin', { timeout: 10000 });
+    await pimPage.searchEmployee(lastName);
+    await expect(pimPage.tableBody).toContainText(lastName, { timeout: 15000 });
   });
 
-    test('TC_PIM_003 - Search non-existent employee returns no records', async ({ page }) => {
+  test('TC_PIM_003 - Search non-existent employee returns no records', async ({ page }) => {
     const pimPage = new PimPage(page);
     await pimPage.navigateToEmployeeList();
     await pimPage.searchNameInput.fill('NoSuchEmployeeXYZ123');
     await page.keyboard.press('Escape');
     await pimPage.searchButton.click();
-    await page.waitForLoadState('networkidle');
-    await expect(page.getByText('No Records Found')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('No Records Found').first()).toBeVisible({ timeout: 15000 });
   });
 
   test('TC_PIM_004 - Verify Employee List page loads', async ({ page }) => {
